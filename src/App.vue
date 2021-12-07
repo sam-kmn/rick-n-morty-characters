@@ -1,8 +1,9 @@
 <template>
 
+  <!-- Mobile layout -->
   <div id="mobile" class="d-md-none">
     <!-- Header -->
-    <div class="container-fluid sticky-top bg-dark py-3 d-md-none">
+    <div class="container-fluid sticky-top bg-dark shadow py-3">
       <div class="row justify-content-center">
         <img id="mobile-logo" class="col-auto" src="./assets/logo.png" alt="">
       </div>
@@ -11,10 +12,17 @@
     <NavbarMobile />
   </div>
 
+  <!-- Desktop layout -->
+  <div id="desktop" class="d-none d-md-block">
+    <NavbarDesktop />
+    <router-view/>
+  </div>
+
 </template>
 
 <script setup>
 import NavbarMobile from './components/NavbarMobile.vue'
+import NavbarDesktop from './components/NavbarDesktop.vue'
 
 </script>
 
@@ -34,7 +42,8 @@ body{background-color: $gray-900}
   font-family: "Poppins";
   padding: 0px;
   margin: 0px; 
-  background: $gray-800;
+  color: white;
+  background-color: $gray-800
 }
 
 #mobile{
@@ -51,6 +60,19 @@ body{background-color: $gray-900}
   }
 }
 
-
+nav{
+  a{
+    color: white;
+    text-decoration: none;
+    &:hover{
+      color: $cyan-400;
+      transition: 2s;
+    }
+  }
+  .router-link-exact-active{
+    color: $cyan-400;
+    transition: 2s;
+  }
+}
 
 </style>
