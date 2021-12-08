@@ -1,28 +1,14 @@
 <template>
 
-  <!-- Mobile layout -->
-  <div id="mobile" class="d-md-none">
-    <!-- Header -->
-    <div class="container-fluid sticky-top bg-dark shadow py-3">
-      <div class="row justify-content-center">
-        <img id="mobile-logo" class="col-auto" src="./assets/logo.png" alt="">
-      </div>
-    </div>
-    <router-view/>
-    <NavbarMobile />
-  </div>
-
-  <!-- Desktop layout -->
-  <div id="desktop" class="d-none d-md-block">
-    <NavbarDesktop />
+  <div>
+    <Navbar />
     <router-view/>
   </div>
 
 </template>
 
 <script setup>
-import NavbarMobile from './components/NavbarMobile.vue'
-import NavbarDesktop from './components/NavbarDesktop.vue'
+import Navbar from './components/Navbar.vue'
 
 </script>
 
@@ -47,33 +33,7 @@ body{ background-color: $gray-900 }
   background-color: $gray-800
 }
 
-#mobile{
-  
-  #mobile-logo{
-    animation: mobile-logo-animation;
-    animation-duration: 2s;
-  }
-  
-  @keyframes mobile-logo-animation {
-    0% {opacity: 0;transform: translateY(-100px)}
-    30% {opacity: 0.15}
-    100% {opacity: 1;transform: translateY(0px)}
-  }
-}
 
-nav{
-  a{
-    color: white;
-    text-decoration: none;
-    &:hover{
-      color: $cyan-400;
-      transition: 2s;
-    }
-  }
-  .router-link-exact-active{
-    color: $cyan-400;
-    transition: 2s;
-  }
-}
+
 
 </style>
