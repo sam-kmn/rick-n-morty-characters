@@ -12,13 +12,13 @@
     </div>
 
     <!-- Gallery -->
-    <div v-if="data.characters" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
-      <div v-for="character, i in data.characters " :key="i" class="col border-dark p-4">
+    <div v-if="data.results.length" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5">
+      <div v-for="character, i in data.results " :key="i" class="col border-dark p-4">
         
-        <div class="character-wrapper">
+        <router-link class="character-wrapper" :to="`/character/${character.id}`">
           <img class="character-image img-fluid" :src="character.image"  alt="Image">
           <div class="character-name">{{character.name}}</div>
-        </div>
+        </router-link>
 
       </div>
     </div>
@@ -41,7 +41,7 @@ const page = computed(()=> store.getters.getPage)
 store.dispatch('fetchChars')
 watch(page, ()=> store.dispatch('fetchChars') )
 
-console.log(data);
+// console.log(data.value);
 
 </script>
 
@@ -80,6 +80,7 @@ console.log(data);
   display: flex;
   flex-direction: column;
   text-align: center;
+  text-decoration: none;
 
   border-radius: var(--default-border-radius);
   border: 1px solid black;
@@ -92,6 +93,8 @@ console.log(data);
 
   .character-name{
     background-color: $gray-900;
+    color: white;
+
     border-bottom-left-radius: var(--default-border-radius);
     border-bottom-right-radius: var(--default-border-radius);
     padding: .3rem 0;

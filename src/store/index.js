@@ -4,7 +4,7 @@ export default createStore({
   state: {
     data: {
       info: {},
-      characters: {}
+      results: []
     },
     search: '',
     page: 1,
@@ -14,9 +14,10 @@ export default createStore({
     resetSearch(state) {
       state.search = ''
     },
-    resetData(state) {
+    resetData(state, error) {
       state.data.info = {}
-      state.data.characters = {}
+      state.data.results = []
+      if (error) state.data.info = {error:true}
     },
     setSearch(state, payload) { state.search = payload },
     setPage(state, payload) { state.page = payload },
@@ -53,15 +54,14 @@ export default createStore({
       })
 
       const response = await res.json()
-
+      
       if (!response.errors) {
         const data = {
           info: response.data.characters.info,
-          characters: response.data.characters.results
+          results: response.data.characters.results
         }
         state.commit('setData', data)
-      } else state.commit('resetData')
-      
+      } else state.commit('resetData', true)
     },
     async fetchCharsByName(state) {
       const Query = `
@@ -98,16 +98,47 @@ export default createStore({
 
       if (!response.errors) {
         const data = {
-          info: response.data.characters.info,
-          characters: response.data.characters.results
+          info: response.data.results.info,
+          results: response.data.results.results
         }
         state.commit('setData', data)
-      } else state.commit('resetData')
+      } else state.commit('resetData', true)
+    },
+    async fetchCharByID(state, payload){
+      const Query = `
+      query {
+        character(id: "${payload}") {
+          image
+          id
+          name
+          gender
+          species
+          episode{
+            episode
+          }
+        }
+      }
+      `
+      const res = await fetch('https://rickandmortyapi.com/graphql', {
+        method: 'POST',
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          query: Query 
+        })
+      })
+      const response = await res.json()
+      if (!response.errors){
+        const data = {
+          info: {},
+          results: response.data.character
+        }
+        state.commit('setData', data)
+      } else state.commit('resetData', true)
     },
     async fetchCharsByIDs(state) {
       const Query = `
         query {
-          charactersByIds(ids: [${state.state.liked}]) {
+          resultsByIds(ids: [${state.state.liked}]) {
             image
             id
             name
@@ -129,7 +160,7 @@ export default createStore({
       if (!response.errors) {
         const data = {
           info: {},
-          characters: response.data.charactersByIds
+          results: response.data.resultsByIds
         }
         state.commit('setData', data)
       } else state.commit('resetData')
