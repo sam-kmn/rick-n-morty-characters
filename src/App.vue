@@ -1,19 +1,18 @@
 <template>
-
   <div>
     <Navbar />
     <router-view/>
   </div>
-
 </template>
+
 
 <script setup>
 import Navbar from './components/Navbar.vue'
-
 </script>
 
 
 <style lang="scss">
+
 @import "bootstrap/scss/_functions";
 @import "bootstrap/scss/_variables";
 

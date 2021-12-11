@@ -93,16 +93,16 @@ body{background-color: $gray-800;}
   #likes-wrapper{
     background-color: $gray-900;
     #like{
-      & i{color: white; transition: .5s;}
+      & i{color: white; transition: .2s;}
       &:hover{
-        & i{color: $red-400; transition: .5s;}
+        & i{color: $red-400; transition: .2s;}
       }
     }
     #liked{
-      & i{color: $red-400; transition: .5s;}
-      &:hover{
-        & i{color: white; transition: .5s;}
-      }
+      & i{color: $red-400; transition: .2s;}
+      // &:hover{
+      //   & i{color: white; transition: .52;}
+      // }
     }
   }
 }

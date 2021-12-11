@@ -66,7 +66,7 @@ export default createStore({
     async fetchCharsByName(state) {
       const Query = `
         query {
-          characters(filter: {name: "${state.state.search.input}"}) {
+          characters(filter: {name: "${state.state.search}"}) {
             info {
               pages
               prev
@@ -105,65 +105,69 @@ export default createStore({
       } else state.commit('resetData', true)
     },
     async fetchCharByID(state, payload){
-      const Query = `
-      query {
-        character(id: "${payload}") {
-          image
-          id
-          name
-          gender
-          species
-          episode{
-            episode
-          }
-        }
-      }
-      `
-      const res = await fetch('https://rickandmortyapi.com/graphql', {
-        method: 'POST',
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          query: Query 
-        })
-      })
-      const response = await res.json()
-      if (!response.errors){
-        const data = {
-          info: {},
-          results: response.data.character
-        }
-        state.commit('setData', data)
-      } else state.commit('resetData', true)
-    },
-    async fetchCharsByIDs(state) {
-      const Query = `
+      if (!payload) state.commit('resetData', true)
+      else {
+        const Query = `
         query {
-          resultsByIds(ids: [${state.state.liked}]) {
+          character(id: "${payload}") {
             image
             id
             name
             gender
             species
+            episode{
+              episode
+            }
           }
         }
-      `
-      const res = await fetch('https://rickandmortyapi.com/graphql', {
-        method: 'POST',
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          query: Query
+        `
+        const res = await fetch('https://rickandmortyapi.com/graphql', {
+          method: 'POST',
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            query: Query 
+          })
         })
-      })
+        const response = await res.json()
+        if (!response.errors){
+          const data = {
+            info: {},
+            results: response.data.character
+          }
+          state.commit('setData', data)
+        } else state.commit('resetData', true)
+      }
+    },
+    async fetchCharsByIDs(state) {
+      if (!state.state.liked.length) state.commit('resetData', true)
+      else{
+        const Query = `
+          query {
+            charactersByIds(ids: [${state.state.liked}]) {
+              image
+              id
+              name
+            }
+          }
+        `
+        const res = await fetch('https://rickandmortyapi.com/graphql', {
+          method: 'POST',
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            query: Query
+          })
+        })
+  
+        const response = await res.json()
 
-      const response = await res.json()
-
-      if (!response.errors) {
-        const data = {
-          info: {},
-          results: response.data.resultsByIds
-        }
-        state.commit('setData', data)
-      } else state.commit('resetData')
+        if (!response.errors) {
+          const data = {
+            info: {},
+            results: response.data.charactersByIds
+          }
+          state.commit('setData', data)
+        } else state.commit('resetData', true)
+      }
     },
   },
   modules: {
