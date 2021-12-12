@@ -6,7 +6,6 @@ export default createStore({
       info: {},
       results: []
     },
-    search: '',
     page: 1,
     liked: [],
   },
@@ -63,10 +62,10 @@ export default createStore({
         state.commit('setData', data)
       } else state.commit('resetData', true)
     },
-    async fetchCharsByName(state) {
+    async fetchCharsByName(state, payload) {
       const Query = `
         query {
-          characters(filter: {name: "${state.state.search}"}) {
+          characters(filter: {name: "${payload}"}) {
             info {
               pages
               prev
@@ -98,8 +97,8 @@ export default createStore({
 
       if (!response.errors) {
         const data = {
-          info: response.data.results.info,
-          results: response.data.results.results
+          info: response.data.characters.info,
+          results: response.data.characters.results
         }
         state.commit('setData', data)
       } else state.commit('resetData', true)
@@ -173,7 +172,6 @@ export default createStore({
   modules: {
   },
   getters: {
-    getSearch(state) { return state.search },
     getPage(state) { return state.page },
     getData(state) { return state.data },
     getLiked(state) { return state.liked },

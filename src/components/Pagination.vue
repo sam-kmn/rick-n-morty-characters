@@ -1,5 +1,5 @@
 <template>
-  <div v-if="data.info.pages" class="container d-flex justify-content-center">
+  <div v-if="data.info.pages > 1" class="container d-flex justify-content-center">
     <nav>
       <ul class="pagination">
         <!-- Prev -->
@@ -48,7 +48,7 @@ watch(page,()=> store.commit('setPage', page.value))
 @import "bootstrap/scss/_variables";
 
 $pagination-color:                  $gray-200;
-$pagination-bg:                     $gray-800;
+$pagination-bg:                     $gray-900;
 $pagination-border-color:           $gray-700;
 
 $pagination-active-color:           white;
