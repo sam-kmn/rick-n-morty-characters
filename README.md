@@ -5,7 +5,7 @@
 ## Overview
 >Simple project powered by [Rick and Morty API](https://rickandmortyapi.com/), built for easy access to characters from Rick and Morty series. 
 
-<img src="./screenshots/Screenshot.png">
+![Screenshot](/Screenshots/Screenshot.png "Screenshot")
 
 ## Technologies
 
