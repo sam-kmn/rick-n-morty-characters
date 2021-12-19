@@ -1,7 +1,6 @@
 # [Rick and Morty Characters](https://samkmn-rickandmorty.netlify.app/)
 
-## Overview
->Simple project powered by [Rick and Morty API](https://rickandmortyapi.com/), built for easy access to characters from Rick and Morty series. 
+Simple project powered by [Rick and Morty API](https://rickandmortyapi.com/), built for easy access to characters from Rick and Morty series. 
 
 ![Screenshot](/Screenshots/Screenshot.png "Screenshot")
 
